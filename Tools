@@ -4,3 +4,4 @@ frontend -> react.js
 fastAPI -> plugins (authenticaiton etc)
 TailwindCSS -> frontend UI
 Bootstrap -> frontend UI
+Golang
