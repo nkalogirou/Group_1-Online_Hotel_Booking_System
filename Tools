@@ -1,6 +1,7 @@
 backend in python -> flask (framework)
 Node.js -> to write javascript
 frontend -> react.js
+database –> SQLITE
 fastAPI -> plugins (authenticaiton etc)
 TailwindCSS -> frontend UI
 Bootstrap -> frontend UI
