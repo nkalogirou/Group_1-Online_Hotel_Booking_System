@@ -1,5 +1,6 @@
 # Online Hotel Booking System (Prototype)
-## Members (Real - Github names):
+
+### Members (Real - Github names):
 Nikos Kalogirou - nkalogirou
 Vasilis Panteli - VasilisPanteli
 Andreas Kestoras - KingKestwr2000
