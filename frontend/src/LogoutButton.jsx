@@ -1,4 +1,4 @@
-// Developer: Nikos K.
+// Nikos K.
 // Requirements: 5.6 Log-Out, 5.6.1 Logout Menu Access
 
 import React from "react";
