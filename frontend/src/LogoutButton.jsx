@@ -1,12 +1,15 @@
+// Developer: Nikos K.
+// Requirements: 5.6 Log-Out, 5.6.1 Logout Menu Access
+
 import React from "react";
-import { useNavigate } from "react-router-dom";
 
 export default function LogoutButton() {
-  const navigate = useNavigate();
-
   const handleLogout = () => {
+    // Remove authentication token (name can be adjusted later)
     localStorage.removeItem("token");
-    navigate("/login");
+
+    // Redirect user to login page
+    window.location.href = "/login";
   };
 
   return (
