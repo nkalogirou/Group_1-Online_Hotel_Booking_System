@@ -1,5 +1,5 @@
 // ======== Hotel Booking System - Server.js ========
-
+//"(test version)"
 // Εισαγωγή modules
 const express = require("express");
 const cors = require("cors");
@@ -15,7 +15,7 @@ app.use("/auth", authRoutes);
 
 // Δοκιμαστικό route
 app.get("/", (req, res) => {
-  res.send("Server is running! 🚀");
+  res.send("Server Working");
 });
 
 // Εκκίνηση server
