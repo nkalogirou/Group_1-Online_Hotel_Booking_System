@@ -1,0 +1,67 @@
+
+public class BookingManager {
+
+    // Function to retrieve and organize a user's booking history
+    public static Map<String, List<Booking>> getBookingHistory(int userId) {
+        
+        // Step 1: Initialize lists
+        List<Booking> userBookings = new ArrayList<>();
+        List<Booking> pastBookings = new ArrayList<>();
+        List<Booking> upcomingBookings = new ArrayList<>();
+
+        // Step 2: Retrieve all bookings (in real code, from a database)
+        List<Booking> allBookings = FetchAllBookingsFromDatabase();
+
+        // Step 3: Filter bookings for this user
+        for (Booking booking : allBookings) {
+            if (booking.getUserId() == userId) {
+                userBookings.add(booking);
+            }
+        }
+
+        // Step 4: Separate into past and upcoming
+        LocalDate currentDate = GetCurrentDate();
+
+        for (Booking booking : userBookings) {
+            if (booking.getDate().isBefore(currentDate)) {
+                pastBookings.add(booking);          // Booking already happened
+            } else {
+                upcomingBookings.add(booking);      // Future booking
+            }
+        }
+
+        // Step 5: Return structured result
+        Map<String, List<Booking>> result = new HashMap<>();
+        result.put("pastBookings", pastBookings);
+        result.put("upcomingBookings", upcomingBookings);
+
+        return result;
+    }
+
+    // Optional function to display bookings in table format
+    public static void displayBookings(List<Booking> bookings) {
+        System.out.println("Booking ID | Date       | Status   | Details");
+        System.out.println("----------------------------------------------");
+
+        for (Booking booking : bookings) {
+            System.out.println(
+                booking.getId() + " | " +
+                booking.getDate() + " | " +
+                booking.getStatus() + " | " +
+                booking.getDetails()
+            );
+        }
+    }
+
+    // Example usage
+    public static void main(String[] args) {
+        int userId = 123;
+        Map<String, List<Booking>> history = getBookingHistory(userId);
+
+        System.out.println("=== Upcoming Bookings ===");
+        displayBookings(history.get("upcomingBookings"));
+
+        System.out.println("\n=== Past Bookings ===");
+        displayBookings(history.get("pastBookings"));
+    }
+}
