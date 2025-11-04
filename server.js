@@ -1,24 +1,26 @@
-// ======= Hotel Booking System – Server.js =======
-// (test version)
+// ======= Hotel Booking System - Server.js =======
+// (Test Version)
 
 // Εισαγωγή modules
 const express = require("express");
 const cors = require("cors");
-const authRoutes = require("./routes/auth");
-
 const app = express();
-app.use(express.json());
-app.use(cors());
+const PORT = 3000;
 
-// Χρήση routes
+// Ενεργοποίηση middlewares
+app.use(cors());
+app.use(express.json());
+
+// Routes
+const authRoutes = require("./routes/auth");
 app.use("/auth", authRoutes);
 
 // Δοκιμαστικό route
 app.get("/", (req, res) => {
-    res.send("Server Working");
+    res.send("Server is running successfully.");
 });
 
 // Εκκίνηση server
-app.listen(3000, () => {
-    console.log("Server running at http://localhost:3000");
+app.listen(PORT, () => {
+    console.log(`Server running at http://localhost:${PORT}`);
 });
