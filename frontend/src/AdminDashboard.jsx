@@ -1,52 +1,33 @@
-// Nikos K.
-// Requirement: 5.7.1 Admin Dashboard Page
-
+// src/AdminDashboard.jsx
 import React from "react";
 
-export default function AdminDashboard() {
-  // For now this is just static demo data (no backend connection yet)
-  const sampleBookings = [
-    { id: 1, user: "John Doe", hotel: "Hotel A", status: "Confirmed" },
-    { id: 2, user: "Jane Smith", hotel: "Hotel B", status: "Cancelled" },
-  ];
-
+function AdminDashboard() {
   return (
-    <div>
-      <h2>Admin Dashboard</h2>
-      <p>This is a simple placeholder page for administrators.</p>
+    <main style={{ padding: "2rem" }}>
+      <h1>Admin Dashboard</h1>
+      <p>
+        This page is for hotel administrators to manage hotels, bookings and reports.
+      </p>
 
-      <section>
-        <h3>Quick Actions</h3>
+      <section style={{ marginTop: "1.5rem" }}>
+        <h2>Sections (planned)</h2>
         <ul>
-          <li>Add new hotel</li>
-          <li>View bookings</li>
-          <li>Generate reports</li>
+          <li>Manage Hotels (add / edit / delete)</li>
+          <li>Manage Bookings (view / cancel)</li>
+          <li>View Reports (revenue, occupancy)</li>
         </ul>
       </section>
 
-      <section>
-        <h3>Recent Bookings (demo data)</h3>
-        <table>
-          <thead>
-            <tr>
-              <th>#</th>
-              <th>User</th>
-              <th>Hotel</th>
-              <th>Status</th>
-            </tr>
-          </thead>
-          <tbody>
-            {sampleBookings.map((b) => (
-              <tr key={b.id}>
-                <td>{b.id}</td>
-                <td>{b.user}</td>
-                <td>{b.hotel}</td>
-                <td>{b.status}</td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
+      <section style={{ marginTop: "1.5rem" }}>
+        <h2>Next steps</h2>
+        <ul>
+          <li>Connect to backend APIs</li>
+          <li>Add tables for hotels and bookings</li>
+          <li>Integrate the Reports page into the dashboard</li>
+        </ul>
       </section>
-    </div>
+    </main>
   );
 }
+
+export default AdminDashboard;
