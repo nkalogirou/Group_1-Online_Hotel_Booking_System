@@ -1,13 +1,15 @@
 // src/AdminDashboard.jsx
 import React from "react";
+import LogoutButton from "./LogoutButton"; 
 
 function AdminDashboard() {
   return (
     <main style={{ padding: "2rem" }}>
-      <h1>Admin Dashboard</h1>
-      <p>
-        This page is for hotel administrators to manage hotels, bookings and reports.
-      </p>
+      <header>
+        <h1>Admin Dashboard</h1>
+        <p>This page is for hotel administrators to manage hotels, bookings and reports.</p>
+        <LogoutButton />
+      </header>
 
       <section style={{ marginTop: "1.5rem" }}>
         <h2>Sections (planned)</h2>

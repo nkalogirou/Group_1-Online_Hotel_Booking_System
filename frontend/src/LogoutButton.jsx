@@ -1,20 +1,23 @@
-// Nikos K.
-// Requirements: 5.6 Log-Out, 5.6.1 Logout Menu Access
-
+// LogoutButton.jsx
 import React from "react";
 
-export default function LogoutButton() {
+/**
+ * Simple placeholder logout button.
+ * Implements part of System Design 5.6: Log-Out.
+ * Later this will clear the real auth token / session.
+ */
+function LogoutButton() {
   const handleLogout = () => {
-    // Remove authentication token (name can be adjusted later)
-    localStorage.removeItem("token");
-
-    // Redirect user to login page
-    window.location.href = "/login";
+    // TODO: Integrate with backend session / JWT removal
+    console.log("User logged out (placeholder).");
+    alert("You have been logged out (demo only).");
   };
 
   return (
-    <button onClick={handleLogout}>
-      Log Out
+    <button type="button" onClick={handleLogout}>
+      Log out
     </button>
   );
 }
+
+export default LogoutButton;
