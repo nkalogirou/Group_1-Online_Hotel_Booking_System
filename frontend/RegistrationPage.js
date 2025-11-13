@@ -5,6 +5,7 @@ import React from 'react'; //React components
 const Registration_Page = () => {
 
 return (
+
     <div className="container mt-4">
       <div className="card">
         <div className="card-body">
@@ -30,10 +31,15 @@ return (
     </div>
     
     <button type="button" className="btn btn-primary w-100">Sign Up</button>
+        </div>
+      </div>
+    </div>
   </div>
 </div>
-)
+);
 
 
 
-}
+
+};
+export default Registration_Page;
