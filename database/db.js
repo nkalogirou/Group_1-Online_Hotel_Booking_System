@@ -5,11 +5,15 @@ const db = new sqlite3.Database("./database/hotel.db", (err) => {
   else console.log("Connected to SQLite database.");
 });
 
+
 db.run(`CREATE TABLE IF NOT EXISTS users (
   id INTEGER PRIMARY KEY AUTOINCREMENT,
   name TEXT,
   email TEXT UNIQUE,
   password TEXT
 )`);
+
+db.run(`ALTER TABLE users ADD COLUMN verified INTEGER DEFAULT 0`, (err) => {});
+
 
 module.exports = db;
