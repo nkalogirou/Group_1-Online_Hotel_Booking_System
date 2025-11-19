@@ -1,15 +1,40 @@
 // src/AdminDashboard.jsx
 import React from "react";
-import LogoutButton from "./LogoutButton"; 
+import LogoutButton from "./LogoutButton";
 
-function AdminDashboard() {
+function AdminDashboard({ onLogout, onGoToReports, onGoToHistory }) {
   return (
     <main style={{ padding: "2rem" }}>
-      <header>
-        <h1>Admin Dashboard</h1>
-        <p>This page is for hotel administrators to manage hotels, bookings and reports.</p>
-        <LogoutButton />
+      <header
+        style={{
+          display: "flex",
+          justifyContent: "space-between",
+          alignItems: "center",
+          gap: "1rem",
+        }}
+      >
+        <div>
+          <h1>Admin Dashboard</h1>
+          <p>
+            This page is for hotel administrators to manage hotels, bookings,
+            and reports.
+          </p>
+        </div>
+
+        <LogoutButton onLogout={onLogout} />
       </header>
+
+      <section style={{ marginTop: "1.5rem" }}>
+        <h2>Quick actions</h2>
+        <div style={{ display: "flex", gap: "1rem", flexWrap: "wrap" }}>
+          <button type="button" onClick={onGoToReports}>
+            View Reports
+          </button>
+          <button type="button" onClick={onGoToHistory}>
+            View Booking History
+          </button>
+        </div>
+      </section>
 
       <section style={{ marginTop: "1.5rem" }}>
         <h2>Sections (planned)</h2>
@@ -17,15 +42,7 @@ function AdminDashboard() {
           <li>Manage Hotels (add / edit / delete)</li>
           <li>Manage Bookings (view / cancel)</li>
           <li>View Reports (revenue, occupancy)</li>
-        </ul>
-      </section>
-
-      <section style={{ marginTop: "1.5rem" }}>
-        <h2>Next steps</h2>
-        <ul>
-          <li>Connect to backend APIs</li>
-          <li>Add tables for hotels and bookings</li>
-          <li>Integrate the Reports page into the dashboard</li>
+          <li>View Booking History</li>
         </ul>
       </section>
     </main>

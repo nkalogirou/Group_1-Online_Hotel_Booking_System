@@ -1,54 +1,107 @@
+// backend/routes/auth.js
 const express = require("express");
 const router = express.Router();
 const bcrypt = require("bcryptjs");
-const db = require("../database/db");
 const jwt = require("jsonwebtoken");
+const db = require("../database/db");
 
+// ⚠️ In a real app, move this to env
+const JWT_SECRET = "super-secret-key-change-me";
 
+// ============= REGISTER =============
 router.post("/register", async (req, res) => {
   const { name, email, password } = req.body;
 
-  if (!name || !email || !password)
+  if (!name || !email || !password) {
     return res.json({ message: "Please fill all fields." });
+  }
 
-  const hashed = await bcrypt.hash(password, 10);
+  try {
+    // Check if email already exists
+    const checkSql = "SELECT id FROM users WHERE email = ?";
+    db.get(checkSql, [email], async (err, row) => {
+      if (err) {
+        console.error("Error checking existing user:", err);
+        return res.status(500).json({ message: "Database error." });
+      }
 
-  const sql = "INSERT INTO users (name, email, password) VALUES (?, ?, ?)";
-  db.run(sql, [name, email, hashed], (err) => {
-    if (err) return res.json({ message: "Email already exists." });
+      if (row) {
+        return res.json({ message: "User with this email already exists." });
+      }
 
-   
-    const token = jwt.sign({ email }, "secret123", { expiresIn: "1h" });
-    const link = `http://localhost:3000/verify/${token}`;
+      // Hash password
+      const hashed = await bcrypt.hash(password, 10);
 
-    res.json({
-      message: "Registration successful! Confirmation email sent.",
-      confirmationLink: link
+      // Insert new user (verified = 1 for this prototype)
+      const insertSql =
+        "INSERT INTO users (name, email, password, verified) VALUES (?, ?, ?, 1)";
+
+      db.run(insertSql, [name, email, hashed], function (err2) {
+        if (err2) {
+          console.error("Error inserting user:", err2);
+          return res.status(500).json({ message: "Failed to register user." });
+        }
+
+        console.log("New user inserted with id:", this.lastID);
+        return res.json({
+          message: "Registration successful! You can now log in.",
+          userId: this.lastID,
+        });
+      });
     });
-  });
+  } catch (e) {
+    console.error("Unexpected error in register:", e);
+    return res.status(500).json({ message: "Unexpected error." });
+  }
 });
 
-
+// ============= LOGIN =============
 router.post("/login", (req, res) => {
   const { email, password } = req.body;
 
-  db.get("SELECT * FROM users WHERE email = ?", [email], async (err, user) => {
-    if (err) return res.json({ message: "Database error." });
-    if (!user) return res.json({ message: "User not found." });
+  if (!email || !password) {
+    return res.status(400).json({ message: "Please fill all fields." });
+  }
 
-    if (!user.verified)
-      return res.json({ message: "Please verify your account to login." });
+  const sql = "SELECT * FROM users WHERE email = ?";
 
-    const match = await bcrypt.compare(password, user.password);
-    if (!match) return res.json({ message: "Wrong password." });
+  db.get(sql, [email], async (err, user) => {
+    if (err) {
+      console.error("Error fetching user:", err);
+      return res.status(500).json({ message: "Database error." });
+    }
 
-    const token = jwt.sign(
-      { id: user.id, email: user.email },
-      "secret123",
-      { expiresIn: "1h" }
-    );
+    if (!user) {
+      return res.status(401).json({ message: "User not found." });
+    }
 
-    res.json({ message: "Login successful!", token });
+    if (!user.verified) {
+      return res
+        .status(401)
+        .json({ message: "Please verify your email before logging in." });
+    }
+
+    try {
+      const match = await bcrypt.compare(password, user.password);
+      if (!match) {
+        return res.status(401).json({ message: "Incorrect password." });
+      }
+
+      const token = jwt.sign(
+        { id: user.id, email: user.email },
+        JWT_SECRET,
+        { expiresIn: "1h" }
+      );
+
+      return res.json({
+        message: "Login successful!",
+        token,
+        userId: user.id,
+      });
+    } catch (e) {
+      console.error("Error during password comparison:", e);
+      return res.status(500).json({ message: "Unexpected error." });
+    }
   });
 });
 

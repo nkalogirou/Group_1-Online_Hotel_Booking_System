@@ -6,9 +6,12 @@ const PORT = 3000;
 app.use(cors());
 app.use(express.json());
 
-// Routes
+// existing routes
 app.use("/auth", require("./routes/auth"));
 app.use("/verify", require("./routes/verify"));
 app.use("/session", require("./routes/session"));
+
+// NEW: booking history route (mounted at root)
+app.use("/", require("./routes/bookingHistory"));
 
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));

@@ -1,16 +1,20 @@
-// LogoutButton.jsx
+// src/LogoutButton.jsx
 import React from "react";
 
 /**
- * Simple placeholder logout button.
- * Implements part of System Design 5.6: Log-Out.
- * Later this will clear the real auth token / session.
+ * Logout button that clears auth token
+ * and notifies parent via onLogout callback.
  */
-function LogoutButton() {
+function LogoutButton({ onLogout }) {
   const handleLogout = () => {
-    // TODO: Integrate with backend session / JWT removal
-    console.log("User logged out (placeholder).");
-    alert("You have been logged out (demo only).");
+    // Remove token from localStorage (backend auth)
+    localStorage.removeItem("token");
+
+    if (onLogout) {
+      onLogout();
+    }
+
+    alert("You have been logged out.");
   };
 
   return (
