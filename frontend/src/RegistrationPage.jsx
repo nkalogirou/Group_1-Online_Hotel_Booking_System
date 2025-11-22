@@ -8,13 +8,21 @@ import React from 'react'; //React components
   
 //NOTES
 //used form-check-inline to made radio buttons horizontal
+//used to center container position-absolute top-50 start-50 translate-middle" style={{ maxWidth: 500,  maxHeight: 1000}} 
+
+
 
 function RegistrationPage() {
+ 
+
+  
 
 return (
 
-    <div className="container">
-       <div className="card" >
+
+  
+      <div class="container position-absolute top-50 start-50 translate-middle" style={{ maxWidth: 500,  maxHeight: 1000}}>
+       <div className="card ">
         <div className="card-body ">
           <h3 className="card-title">Create Your Account</h3>
 
@@ -62,3 +70,5 @@ return (
 
 };
 export default RegistrationPage;
+
+

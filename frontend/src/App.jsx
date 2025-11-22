@@ -5,7 +5,7 @@
 //trying to run registration page
 
 import React from 'react';
-import RegistrationPage from './RegistrationPage.jsx';
+import RegistrationPage from './MainPage.jsx';
 
 
 import 'bootstrap/dist/css/bootstrap.min.css';
