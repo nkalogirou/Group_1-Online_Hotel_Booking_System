@@ -1,5 +1,6 @@
 //Vasilis P.
 import React from 'react'; //React components
+import { Link } from "react-router-dom";// to navigate to other files
 //NOTES 
 //used fixed-top bg-body-tertiary to make navbar stay on top (buttons dissapeared for some reason)
 
@@ -29,16 +30,17 @@ return (
               <a className="nav-link active" aria-current="page" href="#">Home</a>
             </li>
             <li className="nav-item">
-              <a className="nav-link" href="#">Features</a>
+              <a className="nav-link" href="#">Hotels</a>
             </li>
             <li className="nav-item">
-              <a className="nav-link" href="#">Pricing</a>
+              <a className="nav-link" href="#">Booking History</a>
             </li>
           </ul>
 
           
           <div className="d-flex">
-            <button className="btn btn-outline-primary me-2" type="button">Register</button>
+            <Link to="/register" className="btn btn-outline-primary me-2">Register</Link>
+
             <button className="btn btn-outline-primary me-2" type="button">Log-in</button>
           </div>
           
