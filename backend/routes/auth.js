@@ -10,18 +10,21 @@ const JWT_SECRET = "super-secret-key-change-me";
 
 // ============= REGISTER =============
 router.post("/register", async (req, res) => {
-  const { name, email, password } = req.body;
+  const { name, email, password, role } = req.body;
 
-  if (!name || !email || !password) {
+  if (!name || !email || !password || !role) {
     return res.json({ message: "Please fill all fields." });
   }
 
+  if (!["admin", "user"].includes(role)) {
+    return res.json({ message: "Invalid role." });
+  }
+
   try {
-    // Check if email already exists
     const checkSql = "SELECT id FROM users WHERE email = ?";
     db.get(checkSql, [email], async (err, row) => {
       if (err) {
-        console.error("Error checking existing user:", err);
+        console.error("Error checking user:", err);
         return res.status(500).json({ message: "Database error." });
       }
 
@@ -29,31 +32,31 @@ router.post("/register", async (req, res) => {
         return res.json({ message: "User with this email already exists." });
       }
 
-      // Hash password
       const hashed = await bcrypt.hash(password, 10);
 
-      // Insert new user (verified = 1 for this prototype)
-      const insertSql =
-        "INSERT INTO users (name, email, password, verified) VALUES (?, ?, ?, 1)";
+      const insertSql = `
+        INSERT INTO users (name, email, password, role, verified)
+        VALUES (?, ?, ?, ?, 1)
+      `;
 
-      db.run(insertSql, [name, email, hashed], function (err2) {
+      db.run(insertSql, [name, email, hashed, role], function (err2) {
         if (err2) {
           console.error("Error inserting user:", err2);
           return res.status(500).json({ message: "Failed to register user." });
         }
 
-        console.log("New user inserted with id:", this.lastID);
         return res.json({
-          message: "Registration successful! You can now log in.",
+          message: "Registration successful!",
           userId: this.lastID,
         });
       });
     });
   } catch (e) {
-    console.error("Unexpected error in register:", e);
+    console.error("Unexpected error:", e);
     return res.status(500).json({ message: "Unexpected error." });
   }
 });
+
 
 // ============= LOGIN =============
 router.post("/login", (req, res) => {
@@ -97,7 +100,10 @@ router.post("/login", (req, res) => {
         message: "Login successful!",
         token,
         userId: user.id,
+        role: user.role,
+        name: user.name,
       });
+
     } catch (e) {
       console.error("Error during password comparison:", e);
       return res.status(500).json({ message: "Unexpected error." });
