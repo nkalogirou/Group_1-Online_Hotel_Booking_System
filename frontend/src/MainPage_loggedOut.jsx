@@ -4,6 +4,8 @@ import { Link } from "react-router-dom";// to navigate to other files
 //NOTES 
 //used fixed-top bg-body-tertiary to make navbar stay on top (buttons dissapeared for some reason)
 
+// <button className="btn btn-outline-primary me-2" type="button">Log-in</button>
+        //  </div>
 
 function MainPage_loggedOut() {
  
@@ -41,7 +43,9 @@ return (
           <div className="d-flex">
             <Link to="/register" className="btn btn-outline-primary me-2">Register</Link>
 
-            <button className="btn btn-outline-primary me-2" type="button">Log-in</button>
+            
+
+            <Link to="/login" className="btn btn-outline-primary me-2">Login</Link>
           </div>
           
         </div>
