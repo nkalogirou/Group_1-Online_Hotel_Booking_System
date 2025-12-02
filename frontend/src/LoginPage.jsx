@@ -25,7 +25,7 @@ import { Link } from "react-router-dom";// to navigate to other files
   </label>
 </div>*/
 
-
+//added <></> to put multiple elements together
 
 function LoginPage() {
  
@@ -33,10 +33,36 @@ function LoginPage() {
   
 
 return (
+  <>
+
+  <nav className="navbar navbar-expand-lg bg-body-tertiary fixed-top"> {/* Navbar at top of page */}
+  <div className="container-fluid">
+    <a className="navbar-brand" href="#">Navbar</a>
+    <button className="navbar-toggler" type="button" data-bs-toggle="collapse" 
+    data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" 
+    aria-label="Toggle navigation">
+      <span className="navbar-toggler-icon"></span>
+    </button>
+    <div className="collapse navbar-collapse" id="navbarNavDropdown">
+      <ul className="navbar-nav">
+        <li className="nav-item">
+          <a className="nav-link active" aria-current="page" href="#">Home</a>
+        </li>
+        <li className="nav-item">
+          <a className="nav-link" href="#">Hotels</a>
+        </li>
+        <li className="nav-item">
+          <a className="nav-link" href="#">Booking History</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
 
 
   
-      <div class="container position-absolute top-50 start-50 translate-middle" style={{ maxWidth: 500,  maxHeight: 1000}}>
+      <div className="container position-absolute top-50 start-50 translate-middle" style={{ maxWidth: 500,  maxHeight: 1000}}> {/* changed class→className for React */}
        <div className="card ">
         <div className="card-body ">
           <h3 className="card-title text-center">Login</h3>
@@ -66,6 +92,8 @@ return (
     </div>
   </div>
 </div>
+
+  </> 
 );
 
 
