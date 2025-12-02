@@ -12,7 +12,19 @@ import { Link } from "react-router-dom";// to navigate to other files
 //used form-check-inline to made radio buttons horizontal
 //used to center container position-absolute top-50 start-50 translate-middle" style={{ maxWidth: 500,  maxHeight: 1000}} 
 
-
+/*<div className="form-check form-check-inline">
+  <input className="form-check-input form-check-inline" type="radio" name="radioDefault" id="radioDefault1" />
+  <label className="form-check-label" htmlFor="radioDefault1">
+    User
+  </label>
+</div>
+<div className="form-check form-check-inline">
+  <input className="form-check-input form-check-inline" type="radio" name="radioDefault" id="radioDefault2" defaultChecked />
+  <label className="form-check-label" htmlFor="radioDefault2">
+    Admin
+  </label>
+</div>*/ 
+//Me, Christos and Nikos Decided to have premade Admin account rather than giving the option to register as Admin(security reasons)
 
 function RegistrationPage() {
  
@@ -31,18 +43,6 @@ return (
 <div className="card ">
   <div className="card-body ">
     
-<div className="form-check form-check-inline">
-  <input className="form-check-input form-check-inline" type="radio" name="radioDefault" id="radioDefault1" />
-  <label className="form-check-label" htmlFor="radioDefault1">
-    User
-  </label>
-</div>
-<div className="form-check form-check-inline">
-  <input className="form-check-input form-check-inline" type="radio" name="radioDefault" id="radioDefault2" defaultChecked />
-  <label className="form-check-label" htmlFor="radioDefault2">
-    Admin
-  </label>
-</div>
 
     <div className="form-floating mb-3">
       <input type="UserName" className="form-control" id="floatingInput" placeholder="John Doe" />
