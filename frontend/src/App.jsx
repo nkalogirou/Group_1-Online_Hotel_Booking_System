@@ -38,6 +38,7 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import MainPage_loggedOut from './MainPage_loggedOut.jsx';
 import RegistrationPage from './RegistrationPage.jsx';
 import LoginPage from './LoginPage.jsx';
+import MainPage_loggedIn from './MainPage_loggedIn.jsx';
 
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/js/bootstrap.bundle.min.js'; 
@@ -50,6 +51,7 @@ function App() {
           <Route path="/" element={<MainPage_loggedOut />} />
           <Route path="/register" element={<RegistrationPage />} />
           <Route path="/login" element={<LoginPage />} />
+          <Route path="/MainLoggedIn" element={<MainPage_loggedIn />} />
         </Routes>
       </div>
     </Router>

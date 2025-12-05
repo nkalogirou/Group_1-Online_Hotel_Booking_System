@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";// to navigate to other files
 
 //will use bootstrap to make it easier trying to figure it out
 //<h5 className="card-title">Create Your Account</h5>
- 
+//<button type="button" className="btn btn-primary w-100">Login</button> 
   
 //NOTES
 //used form-check-inline to made radio buttons horizontal
@@ -85,8 +85,7 @@ return (
       <label htmlFor="floatingPassword">Password</label>
     </div>
     
-    
-    <button type="button" className="btn btn-primary w-100">Login</button>
+    <Link to="/MainLoggedIn" className="btn btn-primary w-100">Login</Link>
         </div>
       </div>
     </div>

@@ -6,7 +6,7 @@ import { Link } from "react-router-dom";// to navigate to other files
 //<h5 className="card-title">Create Your Account</h5>
 
 //const Registration_Page = () => 
- 
+//<button type="button" className="btn btn-primary w-100">Sign Up</button> 
   
 //NOTES
 //used form-check-inline to made radio buttons horizontal
@@ -29,6 +29,8 @@ import { Link } from "react-router-dom";// to navigate to other files
 //Added the navbar from the mainpages
 
 //added <></> to put multiple elements together
+
+
 
 function RegistrationPage() {
  
@@ -91,8 +93,8 @@ return (
       <input type="password" className="form-control" id="floatingPasswordRepeat" placeholder="Repeat Password" />
       <label htmlFor="floatingPasswordRepeat">Repeat Password</label>
     </div>
-    
-    <button type="button" className="btn btn-primary w-100">Sign Up</button>
+
+    <Link to="/MainLoggedIn" className="btn btn-primary w-100">Sign Up</Link>
         </div>
       </div>
     </div>
