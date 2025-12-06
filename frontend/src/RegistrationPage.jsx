@@ -1,13 +1,15 @@
 //Vasilis P.
-import React from 'react'; //React components
+//import React from 'react'; //React components
 import { Link } from "react-router-dom";// to navigate to other files
+import React, { useState } from 'react';// for parameter checks
 
 //will use bootstrap to make it easier trying to figure it out
 //<h5 className="card-title">Create Your Account</h5>
 
 //const Registration_Page = () => 
 //<button type="button" className="btn btn-primary w-100">Sign Up</button> 
-  
+//<Link to="/MainLoggedIn" className="btn btn-primary w-100">Sign Up</Link> old sign up button 
+
 //NOTES
 //used form-check-inline to made radio buttons horizontal
 //used to center container position-absolute top-50 start-50 translate-middle" style={{ maxWidth: 500,  maxHeight: 1000}} 
@@ -30,12 +32,33 @@ import { Link } from "react-router-dom";// to navigate to other files
 
 //added <></> to put multiple elements together
 
-
-
+//added value={password} onChange={(e) => setPassword(e.target.value)} for password parameter checking
+/*const [password, setPassword] = useState("");
+const [repeatPassword, setRepeatPassword] = useState("");
+const [passwordError, setPasswordError] = useState("");*/ 
 function RegistrationPage() {
  
-
+const [password, setPassword] = useState("");
+const [repeatPassword, setRepeatPassword] = useState("");
+const [passwordError, setPasswordError] = useState("");
   
+function validatePasswords() {
+
+  if(password.length < 8) {
+    setPasswordError("Password must be longer than 8 characters");
+    return false;
+  }
+
+  if (password !== repeatPassword) {
+    setPasswordError("Passwords do not match");
+    
+    return false;
+  } 
+
+  setPasswordError("");
+  return true;
+
+}
 
 return (
   <>
@@ -85,16 +108,27 @@ return (
     </div>
     
     <div className="form-floating mb-3">
-      <input type="password" className="form-control" id="floatingPassword" placeholder="Password" />
+      <input type="password" className="form-control" id="floatingPassword" placeholder="Password" 
+      value={password} onChange={(e) => setPassword(e.target.value)} />
       <label htmlFor="floatingPassword">Password</label>
     </div>
     
     <div className="form-floating mb-3">
-      <input type="password" className="form-control" id="floatingPasswordRepeat" placeholder="Repeat Password" />
+      <input type="password" className="form-control" id="floatingPasswordRepeat" placeholder="Repeat Password" 
+      value={repeatPassword} onChange={(e) => setRepeatPassword(e.target.value)} />
       <label htmlFor="floatingPasswordRepeat">Repeat Password</label>
     </div>
 
-    <Link to="/MainLoggedIn" className="btn btn-primary w-100">Sign Up</Link>
+    {passwordError && (
+      <p style={{ color: "red", marginTop: "-10px" }}>{passwordError}</p>
+    )}
+
+    <button className="btn btn-primary w-100" onClick={() =>{
+      if (validatePasswords()) {
+        window.location.href = "/MainLoggedIn";
+      }
+    }}>Sign Up</button>
+        
         </div>
       </div>
     </div>

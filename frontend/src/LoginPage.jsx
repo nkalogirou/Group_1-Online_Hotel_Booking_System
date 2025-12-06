@@ -84,6 +84,12 @@ return (
       <input type="password" className="form-control" id="floatingPassword" placeholder="Password" />
       <label htmlFor="floatingPassword">Password</label>
     </div>
+
+    <p>
+  <a href="#" style={{ color: "blue", fontSize: "0.9rem" }}>
+    Forgot your password?
+  </a>
+</p>
     
     <Link to="/MainLoggedIn" className="btn btn-primary w-100">Login</Link>
         </div>
