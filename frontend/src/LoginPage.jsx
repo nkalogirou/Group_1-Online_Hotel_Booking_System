@@ -1,11 +1,13 @@
 //Vasilis P.
-import React from 'react'; //React components
+//import React from 'react'; //React components
 import { Link } from "react-router-dom";// to navigate to other files
+import React, { useState } from 'react';
 
 //will use bootstrap to make it easier trying to figure it out
 //<h5 className="card-title">Create Your Account</h5>
 //<button type="button" className="btn btn-primary w-100">Login</button> 
-  
+//<Link to="/MainLoggedIn" className="btn btn-primary w-100">Login</Link> old login button  
+
 //NOTES
 //used form-check-inline to made radio buttons horizontal
 //used to center container position-absolute top-50 start-50 translate-middle" style={{ maxWidth: 500,  maxHeight: 1000}} 
@@ -31,7 +33,26 @@ function LoginPage() {
  
 
   
+const [email, setEmail] =useState("");
+const [password, setPassword] =useState("");
 
+const [loginError, setLoginError] =useState("");
+
+function validateLogin() {
+
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+  if (!emailRegex.test(email) || password.length === 0) {
+
+    setLoginError("Incorrect login details");
+
+    return false;
+  }
+
+setLoginError("");
+
+return true;
+}
 return (
   <>
 
@@ -71,17 +92,21 @@ return (
   <div className="card-body ">
     
     <div className="form-floating mb-3">
-      <input type="UserName" className="form-control" id="floatingInput" placeholder="John Doe" />
-      <label htmlFor="floatingInput">Username</label>
+      <input type="UserName" className="form-control" id="floatingUser" placeholder="John Doe" />
+      <label htmlFor="floatingUser">Username</label>
     </div>
 
     <div className="form-floating mb-3">
-      <input type="email" className="form-control" id="floatingInput" placeholder="name@example.com" />
-      <label htmlFor="floatingInput">Email address</label>
+      <input type="email" className="form-control" id="floatingEmail" placeholder="name@example.com" 
+      value={email} onChange={(e) =>setEmail(e.target.value)}/>
+
+      <label htmlFor="floatingEmail">Email address</label>
     </div>
     
     <div className="form-floating mb-3">
-      <input type="password" className="form-control" id="floatingPassword" placeholder="Password" />
+      <input type="password" className="form-control" id="floatingPassword" placeholder="Password" 
+      value={password} onChange={(e) => setPassword(e.target.value)}/>
+
       <label htmlFor="floatingPassword">Password</label>
     </div>
 
@@ -90,8 +115,25 @@ return (
     Forgot your password?
   </a>
 </p>
+
+    {loginError && (
+      <p style={{ color: "red", marginTop: "-10px" }}>{loginError}</p>
+    )}
     
-    <Link to="/MainLoggedIn" className="btn btn-primary w-100">Login</Link>
+    <button
+    
+    className="btn btn-primary w-100" onClick={() =>{
+
+       if (validateLogin()){
+        window.location.href = "/MainLoggedIn";
+       }
+    }}
+    >
+      Login</button>    
+
+
+
+    
         </div>
       </div>
     </div>
