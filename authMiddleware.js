@@ -1,6 +1,7 @@
 const jwt = require('jsonwebtoken');
 
-const JWT_SECRET = 'secret123'; 
+const JWT_SECRET = 'secret123';
+
 module.exports = function (req, res, next) {
   const authHeader = req.headers['authorization'];
 
@@ -18,7 +19,9 @@ module.exports = function (req, res, next) {
 
     
     req.user = {
-      id: decoded.id,      
+      id: decoded.id,
+      email: decoded.email,
+      role: decoded.role   
     };
 
     next();
