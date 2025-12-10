@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Cancel Booking</title>
+
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #f4f4f4;
+    }
+
+    .navbar {
+      background: #222;
+      padding: 15px 25px;
+      color: white;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .navbar a {
+      color: white;
+      margin-left: 15px;
+      text-decoration: none;
+      font-weight: bold;
+    }
+
+    .container {
+      max-width: 700px;
+      margin: 50px auto;
+      background: white;
+      padding: 40px;
+      border-radius: 10px;
+      box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+    }
+
+    h2 {
+      text-align: center;
+      margin-bottom: 30px;
+    }
+
+    .form-group {
+      margin-bottom: 20px;
+      display: flex;
+      flex-direction: column;
+    }
+
+    label {
+      font-weight: bold;
+      margin-bottom: 8px;
+    }
+
+    input {
+      padding: 12px;
+      border-radius: 6px;
+      border: 1px solid #ccc;
+      font-size: 1rem;
+    }
+
+    .warning-box {
+      background: #fff3cd;
+      padding: 15px;
+      border-left: 5px solid #ffca2c;
+      border-radius: 6px;
+      margin-bottom: 25px;
+    }
+
+    .warning-box p {
+      margin: 0;
+      font-size: 0.95rem;
+    }
+
+    .btn-cancel {
+      width: 100%;
+      padding: 12px;
+      background: #c62828;
+      color: white;
+      font-size: 1.1rem;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: 0.2s;
+      margin-top: 10px;
+    }
+
+    .btn-cancel:hover {
+      background: #b71c1c;
+    }
+
+  </style>
+</head>
+
+<body>
+
+  <div class="navbar">
+    <div class="logo">HotelBooking</div>
+    <div>
+      <a href="#">Home</a>
+      <a href="#">My Bookings</a>
+      <a href="#">Logout</a>
+    </div>
+  </div>
+
+  <div class="container">
+    <h2>Cancel a Booking</h2>
+
+    <div class="warning-box">
+      <p><strong>Warning:</strong> Cancelling a booking is irreversible. You will lose this reservation permanently.</p>
+    </div>
+
+    <div class="form-group">
+      <label>Enter Booking ID</label>
+      <input type="text" placeholder="e.g. BK-234567" />
+    </div>
+
+    <div class="form-group">
+      <label>Reason for Cancellation (optional)</label>
+      <input type="text" placeholder="Your reason..." />
+    </div>
+
+    <button class="btn-cancel">Cancel Booking</button>
+  </div>
+
+</body>
+</html>
