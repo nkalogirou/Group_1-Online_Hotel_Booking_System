@@ -1,0 +1,24 @@
+{
+  "name": "group_1-online_hotel_booking_system",
+  "version": "1.0.0",
+  "description": "* Nikos Kalogirou - nkalogirou * Vasilis Panteli - VasilisPanteli * Andreas Kestoras - KingKestwr2000 * Christos Mouchlis - christosmouchlis21 * Andreas Andreou - antreasmarvel2-crypto",
+  "main": "index.js",
+  "directories": {
+    "doc": "docs"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/nkalogirou/Group_1-Online_Hotel_Booking_System.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/nkalogirou/Group_1-Online_Hotel_Booking_System/issues"
+  },
+  "homepage": "https://github.com/nkalogirou/Group_1-Online_Hotel_Booking_System#readme"
+}

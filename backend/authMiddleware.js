@@ -1,25 +1,27 @@
-const jwt = require("jsonwebtoken");
+const jwt = require('jsonwebtoken');
 
-const JWT_SECRET = "super-secret-key-change-me";  // Secret key
+const JWT_SECRET = 'secret123';
 
 module.exports = function (req, res, next) {
-  const authHeader = req.headers["authorization"];
-  if (!authHeader || !authHeader.startsWith("Bearer ")) {
-    return res.status(401).json({ message: "No token provided." });
+  const authHeader = req.headers['authorization'];
+
+  if (!authHeader || !authHeader.startsWith('Bearer ')) {
+    return res.status(401).json({ message: 'No token provided' });
   }
 
-  const token = authHeader.split(" ")[1];
+  const token = authHeader.split(' ')[1];
 
   jwt.verify(token, JWT_SECRET, (err, decoded) => {
     if (err) {
-      console.error("JWT verify error:", err);
-      return res.status(401).json({ message: "Invalid token" });
+      console.error('JWT verify error:', err);
+      return res.status(401).json({ message: 'Invalid token' });
     }
 
+    
     req.user = {
       id: decoded.id,
       email: decoded.email,
-      role: decoded.role,
+      role: decoded.role   
     };
 
     next();

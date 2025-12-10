@@ -1,188 +1,125 @@
-//Vasilis P.
-//import React from 'react'; //React components
-import { Link } from "react-router-dom";// to navigate to other files
-import React, { useState } from 'react';// for parameter checks
+import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';  // Import useNavigate
+import Navbar from './Navbar';  // Import Navbar component
 
-//will use bootstrap to make it easier trying to figure it out
-//<h5 className="card-title">Create Your Account</h5>
-
-//const Registration_Page = () => 
-//<button type="button" className="btn btn-primary w-100">Sign Up</button> 
-//<Link to="/MainLoggedIn" className="btn btn-primary w-100">Sign Up</Link> old sign up button 
-///[a-zA-Z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,8}(\.[a-z]{2,8})?/ tryed this regex not working properly
-//NOTES
-//used form-check-inline to made radio buttons horizontal
-//used to center container position-absolute top-50 start-50 translate-middle" style={{ maxWidth: 500,  maxHeight: 1000}} 
-
-/*<button className="btn btn-primary w-100" onClick={() =>{
-      if (validateEmail() && validatePasswords()) {
-        window.location.href = "/MainLoggedIn";
-      }
-    }}>Sign Up</button>*/ //this only writes if 1 field has an error it doesnt check the other one or both at the same time
-
-
-/*<div className="form-check form-check-inline">
-  <input className="form-check-input form-check-inline" type="radio" name="radioDefault" id="radioDefault1" />
-  <label className="form-check-label" htmlFor="radioDefault1">
-    User
-  </label>
-</div>
-<div className="form-check form-check-inline">
-  <input className="form-check-input form-check-inline" type="radio" name="radioDefault" id="radioDefault2" defaultChecked />
-  <label className="form-check-label" htmlFor="radioDefault2">
-    Admin
-  </label>
-</div>*/ 
-//Me, Christos and Nikos Decided to have premade Admin account rather than giving the option to register as Admin(security reasons)
-
-//Added the navbar from the mainpages
-
-//added <></> to put multiple elements together
-
-//added value={password} onChange={(e) => setPassword(e.target.value)} for password parameter checking
-/*const [password, setPassword] = useState("");
-const [repeatPassword, setRepeatPassword] = useState("");
-const [passwordError, setPasswordError] = useState("");*/ 
 function RegistrationPage() {
+  const [name, setName] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [repeatPassword, setRepeatPassword] = useState('');
+  const [loginError, setLoginError] = useState('');
 
-const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/; 
+  const navigate = useNavigate();  // Initialize useNavigate hook
 
-const [email, setEmail] =useState("");
-const [emailError, setEmailError] =useState("");
-
-const [password, setPassword] =useState("");
-const [repeatPassword, setRepeatPassword] =useState("");
-const [passwordError, setPasswordError] =useState("");
-  
-function validatePasswords() {
-
-  if(password.length < 8) {
-    setPasswordError("Password must be longer than 8 characters");
-    return false;
+  // Validate form fields
+  function validateLogin() {
+    if (!name || !email || !password || !repeatPassword) {
+      setLoginError("All fields are required.");
+      return false;
+    }
+    if (password !== repeatPassword) {
+      setLoginError("Passwords do not match.");
+      return false;
+    }
+    setLoginError("");
+    return true;
   }
 
-  if (password !== repeatPassword) {
-    setPasswordError("Passwords do not match");
-    
-    return false;
-  } 
+  // Handle registration
+  const handleRegistration = () => {
+    console.log("Sign Up button clicked");  // Log when the button is clicked
+    if (validateLogin()) {
+      console.log("Form validated");  // Log if the form is validated
+      fetch('http://localhost:3000/auth/register', {  // Update URL to match backend (localhost:3000)
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ name, email, password })
+      })
+        .then((response) => response.json())
+        .then((data) => {
+          if (data.userId) {
+            console.log('Registration successful');
+            navigate("/login");  // Redirect to login page after successful registration
+          } else {
+            console.log(data.message);  // Display error message from backend
+          }
+        })
+        .catch((error) => {
+          console.error('Error:', error);
+        });
+    }
+  };
 
-  setPasswordError("");
-  return true;
 
-}
+  return (
+    <>
+      <Navbar />  {/* Use Navbar here */}
+      <div className="container position-absolute top-50 start-50 translate-middle" style={{ maxWidth: 500, maxHeight: 1000 }}>
+        <div className="card">
+          <div className="card-body">
+            <h3 className="card-title text-center">Create Your Account</h3>
 
-function validateEmail() {
+            <div className="form-floating mb-3">
+              <input
+                type="text"
+                className="form-control"
+                id="floatingUsername"
+                placeholder="Username"
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+              />
+              <label htmlFor="floatingUsername">Username</label>
+            </div>
 
-const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            <div className="form-floating mb-3">
+              <input
+                type="email"
+                className="form-control"
+                id="floatingEmail"
+                placeholder="Email address"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+              />
+              <label htmlFor="floatingEmail">Email address</label>
+            </div>
 
-if (!emailRegex.test(email)) {
+            <div className="form-floating mb-3">
+              <input
+                type="password"
+                className="form-control"
+                id="floatingPassword"
+                placeholder="Password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+              />
+              <label htmlFor="floatingPassword">Password</label>
+            </div>
 
-  setEmailError("Invalid email format");
+            <div className="form-floating mb-3">
+              <input
+                type="password"
+                className="form-control"
+                id="floatingPasswordRepeat"
+                placeholder="Repeat Password"
+                value={repeatPassword}
+                onChange={(e) => setRepeatPassword(e.target.value)}
+              />
+              <label htmlFor="floatingPasswordRepeat">Repeat Password</label>
+            </div>
 
-  return false;
-}
+            {loginError && <p style={{ color: "red", marginTop: "-10px" }}>{loginError}</p>}
 
-setEmailError("");
-
-return true;
-}
-return (
-  <>
-    <nav className="navbar navbar-expand-lg bg-body-tertiary fixed-top">
-      <div className="container-fluid">
-        <a className="navbar-brand" href="#">Navbar</a>
-        <button className="navbar-toggler" type="button" data-bs-toggle="collapse" 
-        data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" 
-        aria-label="Toggle navigation">
-          <span className="navbar-toggler-icon"></span>
-        </button>
-        <div className="collapse navbar-collapse" id="navbarNavDropdown">
-          <ul className="navbar-nav">
-            <li className="nav-item">
-              <Link className="nav-link active" aria-current="page" to="/">Home</Link>
-            </li>
-            <li className="nav-item">
-              <a className="nav-link" href="#">Hotels</a>
-            </li>
-            <li className="nav-item">
-              <a className="nav-link" href="#">Booking History</a>
-            </li>
-          </ul>
+            <button
+              className="btn btn-primary w-100"
+              onClick={handleRegistration}  // Call the registration handler
+            >
+              Sign Up
+            </button>
+          </div>
         </div>
       </div>
-    </nav>
+    </>
+  );
+}
 
-
-
-    <div className="container position-absolute top-50 start-50 translate-middle" style={{ maxWidth: 500,  maxHeight: 1000}}>
-       <div className="card ">
-        <div className="card-body ">
-          <h3 className="card-title text-center">Create Your Account</h3>
-
-<div className="card ">
-  <div className="card-body ">
-    
-
-    <div className="form-floating mb-3">
-      <input type="UserName" className="form-control" id="floatingUser" placeholder="John Doe" />
-      <label htmlFor="floatingUser">Username</label>
-    </div>
-
-    <div className="form-floating mb-3">
-      <input type="email" className="form-control" id="floatingEmail" placeholder="name@example.com" 
-      value={email} onChange={(e) =>setEmail(e.target.value)} />
-
-      <label htmlFor="floatingEmail">Email address</label>
-    </div>
-
-    {emailError && (
-      <p style={{ color: "red", marginTop: "-10px" }}>{emailError}</p>
-    )}
-    
-    <div className="form-floating mb-3">
-      <input type="password" className="form-control" id="floatingPassword" placeholder="Password" 
-      value={password} onChange={(e) => setPassword(e.target.value)} />
-      <label htmlFor="floatingPassword">Password</label>
-    </div>
-    
-    <div className="form-floating mb-3">
-      <input type="password" className="form-control" id="floatingPasswordRepeat" placeholder="Repeat Password" 
-      value={repeatPassword} onChange={(e) => setRepeatPassword(e.target.value)} />
-      <label htmlFor="floatingPasswordRepeat">Repeat Password</label>
-    </div>
-
-    {passwordError && (
-      <p style={{ color: "red", marginTop: "-10px" }}>{passwordError}</p>
-    )}
-
-    
-    <button
-    
-    className="btn btn-primary w-100" onClick={() =>{
-
-    const emailValid = validateEmail();
-    const passwordValid = validatePasswords();
-
-       if (validateEmail() && validatePasswords()){
-        window.location.href = "/MainLoggedIn";
-       }
-    }}
-    >
-      Sign Up</button>
-        
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-  </>
-);
-
-
-
-
-};
 export default RegistrationPage;
-
-

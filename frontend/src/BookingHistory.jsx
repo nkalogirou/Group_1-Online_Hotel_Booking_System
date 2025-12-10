@@ -1,127 +1,75 @@
-// src/BookingHistory.jsx
-import React, { useEffect, useState } from "react";
-import api from "./apiClient";
+import React, { useEffect, useState } from 'react';
 
-/**
- * Shows upcoming and past bookings for a given user.
- * 
- * Props:
- *   - userId (number | string): ID of the logged-in user
- */
-function BookingHistory({ userId }) {
-  const [upcomingBookings, setUpcomingBookings] = useState([]);
-  const [pastBookings, setPastBookings] = useState([]);
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState("");
+function UserBookingHistory() {
+  const [bookings, setBookings] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
-    if (!userId) return;
+    const token = localStorage.getItem('token');  // Get JWT token from localStorage
 
-    const fetchBookings = async () => {
-      setLoading(true);
-      setError("");
-
-      try {
-        // This mirrors your original HTML fetch:
-        // GET /bookingHistory?userId=123
-        const res = await api.get("/bookingHistory", {
-          params: { userId },
+    if (token) {
+      fetch('http://localhost:3000/api/bookings', {
+        headers: {
+          Authorization: `Bearer ${token}`,  // Pass JWT token in the Authorization header
+        },
+      })
+        .then((response) => {
+          console.log("Response Status:", response.status);  // Log status code
+          return response.json();
+        })
+        .then((data) => {
+          console.log("Bookings Data:", data);  // Log the response data
+          if (data.bookings) {
+            setBookings(data.bookings);
+          } else {
+            setError("No bookings found.");
+          }
+        })
+        .catch((error) => {
+          console.error("Error fetching booking history:", error);
+          setError("An error occurred while fetching booking history.");
         });
-
-        const data = res.data || {};
-        setUpcomingBookings(data.upcomingBookings || []);
-        setPastBookings(data.pastBookings || []);
-      } catch (err) {
-        console.error("Error fetching booking history:", err);
-        setError("Failed to load booking history. Please try again.");
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchBookings();
-  }, [userId]);
-
-  const renderTable = (bookings) => {
-    if (!bookings.length) {
-      return (
-        <tr>
-          <td colSpan="4">No bookings found.</td>
-        </tr>
-      );
+    } else {
+      setError("You must be logged in to view booking history.");
+      setLoading(false);
     }
+  }, []);
 
-    return bookings.map((booking) => (
-      <tr key={booking.id}>
-        <td>{booking.id}</td>
-        <td>{booking.date}</td>
-        <td>{booking.status}</td>
-        <td>{booking.details}</td>
-      </tr>
-    ));
-  };
+  if (loading) {
+    return <div>Loading...</div>;
+  }
 
   return (
-    <main style={{ padding: "2rem" }}>
-      <h2 style={{ textAlign: "center" }}>Booking History</h2>
-
-      {loading && <p style={{ textAlign: "center" }}>Loading bookings...</p>}
-      {error && (
-        <p style={{ textAlign: "center", color: "red" }}>{error}</p>
+    <div className="booking-history-page">
+      <h1>Your Booking History</h1>
+      {error && <p>{error}</p>}
+      {bookings.length > 0 ? (
+        <table>
+          <thead>
+            <tr>
+              <th>Booking ID</th>
+              <th>Date</th>
+              <th>Hotel</th>
+              <th>Status</th>
+            </tr>
+          </thead>
+          <tbody>
+            {bookings.map((booking) => (
+              <tr key={booking.id}>
+                <td>{booking.id}</td>
+                <td>{booking.date}</td>
+                <td>{booking.hotel}</td>
+                <td>{booking.status}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      ) : (
+        <p>No bookings found.</p>
       )}
-
-      {/* Upcoming Bookings */}
-      <section style={{ marginTop: "1.5rem" }}>
-        <h3 style={{ textAlign: "center" }}>Upcoming Bookings</h3>
-        <table
-          style={{
-            borderCollapse: "collapse",
-            width: "80%",
-            margin: "20px auto",
-          }}
-        >
-          <thead>
-            <tr>
-              <th style={thStyle}>ID</th>
-              <th style={thStyle}>Date</th>
-              <th style={thStyle}>Status</th>
-              <th style={thStyle}>Details</th>
-            </tr>
-          </thead>
-          <tbody>{renderTable(upcomingBookings)}</tbody>
-        </table>
-      </section>
-
-      {/* Past Bookings */}
-      <section style={{ marginTop: "1.5rem" }}>
-        <h3 style={{ textAlign: "center" }}>Past Bookings</h3>
-        <table
-          style={{
-            borderCollapse: "collapse",
-            width: "80%",
-            margin: "20px auto",
-          }}
-        >
-          <thead>
-            <tr>
-              <th style={thStyle}>ID</th>
-              <th style={thStyle}>Date</th>
-              <th style={thStyle}>Status</th>
-              <th style={thStyle}>Details</th>
-            </tr>
-          </thead>
-          <tbody>{renderTable(pastBookings)}</tbody>
-        </table>
-      </section>
-    </main>
+    </div>
   );
 }
 
-const thStyle = {
-  border: "1px solid #ccc",
-  padding: "8px",
-  textAlign: "center",
-  backgroundColor: "#f2f2f2",
-};
-
-export default BookingHistory;
+export default UserBookingHistory;

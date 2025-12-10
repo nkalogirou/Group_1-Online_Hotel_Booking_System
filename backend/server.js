@@ -1,19 +1,17 @@
 const express = require("express");
-const bookingsRouter = require('./routes/bookings');
 const cors = require("cors");
 const app = express();
-const PORT = 3000;
 
 app.use(cors());
 app.use(express.json());
 
-// existing routes
-app.use("/auth", require("./routes/auth"));
-app.use("/verify", require("./routes/verify"));
-app.use("/session", require("./routes/session"));
-app.use('/bookings', bookingsRouter);
+// Import the auth routes
+const authRoutes = require("./routes/auth");
 
-// NEW: booking history route (mounted at root)
-app.use("/", require("./routes/bookingHistory"));
+// Use the auth routes at /auth
+app.use("/auth", authRoutes);
 
-app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+const port = 3000;
+app.listen(port, () => {
+  console.log(`Server running on port ${port}`);
+});
