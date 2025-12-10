@@ -5,12 +5,13 @@ const db = new sqlite3.Database("./database/hotel.db", (err) => {
   else console.log("Connected to SQLite database.");
 });
 
-
+// Ensure users table has name, email, and password
 db.run(`CREATE TABLE IF NOT EXISTS users (
   id INTEGER PRIMARY KEY AUTOINCREMENT,
   name TEXT,
   email TEXT UNIQUE,
-  password TEXT
+  password TEXT,
+  verified INTEGER DEFAULT 0
 )`);
 
 db.run(`CREATE TABLE IF NOT EXISTS bookings (
@@ -23,8 +24,5 @@ db.run(`CREATE TABLE IF NOT EXISTS bookings (
   status TEXT DEFAULT 'confirmed',
   created_at DATETIME DEFAULT CURRENT_TIMESTAMP
 )`);
-
-db.run(`ALTER TABLE users ADD COLUMN verified INTEGER DEFAULT 0`, (err) => {});
-
 
 module.exports = db;
