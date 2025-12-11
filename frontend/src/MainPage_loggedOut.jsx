@@ -11,6 +11,7 @@ function MainPage_loggedOut() {
  
 
 return (
+  <>
     <nav className="navbar navbar-expand-lg bg-body-tertiary fixed-top">
       <div className="container-fluid">
         <a className="navbar-brand" href="#">Navbar</a>
@@ -51,6 +52,41 @@ return (
         </div>
       </div>
     </nav>
+
+<div className="pt-5" style={{ minHeight: "100vh" }}>
+
+  
+<div className="container">
+    
+    <div className="w-75 mx-auto"> 
+<div id="carouselExampleAutoplaying" className="carousel slide" data-bs-ride="carousel">
+
+<div className="carousel-inner">
+<div className="carousel-item active">
+<img src="/carousel1.jpg" className="d-block w-100" alt="Slide 1" />
+</div>
+<div className="carousel-item">
+<img src="/carousel2.jpg" className="d-block w-100" alt="Slide 2" />
+</div>
+<div className="carousel-item">
+<img src="/carousel3.jpg" className="d-block w-100" alt="Slide 3" />
+</div>
+</div>
+
+<button className="carousel-control-prev" type="button" data-bs-target="#carouselExampleAutoplaying" data-bs-slide="prev">
+<span className="carousel-control-prev-icon"></span>
+</button>
+
+<button className="carousel-control-next" type="button" data-bs-target="#carouselExampleAutoplaying" data-bs-slide="next">
+<span className="carousel-control-next-icon"></span>
+</button>
+
+</div>
+</div>
+  </div>
+</div>
+
+  </>
   );
 };
 export default MainPage_loggedOut;
