@@ -53,7 +53,7 @@ return (
       </div>
     </nav>
 
-<div className="pt-5" style={{ minHeight: "100vh" }}>
+<div className="pt-5" style={{ minHeight: "100vh", minWidth: "150vw" }}>
 
   
 <div className="container">
